@@ -34,6 +34,19 @@ describe('tools', () => {
     expect(r.ok && (r.data as { trackingNumber: string }).trackingNumber).toBe('1Z-DEMO-0001043');
   });
 
+  it('includes refund eligibility computed by the policy, not by the model', () => {
+    const f = fixture();
+    const inside = call(f, 'lookup_order', { order_id: 'RG-1042' });
+    const outside = call(f, 'lookup_order', { order_id: 'RG-0977' });
+    expect(inside.ok && (inside.data as { refund_eligibility: unknown }).refund_eligibility).toEqual({
+      eligible: true,
+      max_amount: 189,
+      needs_human_approval: true,
+    });
+    expect(outside.ok && (outside.data as { refund_eligibility: { reason: string } }).refund_eligibility.reason).toContain('return window is 30 days');
+    expect(JSON.stringify(inside)).not.toContain('C-100');
+  });
+
   it("never reveals another customer's order, and the error does not confirm it exists", () => {
     const f = fixture();
     const other = call(f, 'lookup_order', { order_id: 'RG-1050' }, MAYA);

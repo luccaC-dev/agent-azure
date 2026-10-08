@@ -33,9 +33,17 @@ export interface ToolDeps {
   clock: () => Date;
 }
 
-function publicOrder(o: Order) {
+/** What the customer may see, plus refund eligibility computed by the policy code so the model never has to work it out. */
+function publicOrder(o: Order, now: Date) {
   const { customerId: _owner, ...rest } = o;
-  return rest;
+  const remaining = Math.max(0, Math.round((o.total - o.refunded) * 100) / 100);
+  const decision = evaluateRefund(o, remaining, now);
+  return {
+    ...rest,
+    refund_eligibility: decision.ok
+      ? { eligible: true, max_amount: decision.maxAmount, needs_human_approval: true }
+      : { eligible: false, reason: decision.reason },
+  };
 }
 
 const orderId = z.string().min(1).max(32);
@@ -55,7 +63,7 @@ export function buildTools(deps: ToolDeps) {
     schema: z.object({ order_id: orderId }).strict(),
     run({ order_id }, ctx) {
       const order = deps.store.orderFor(ctx.customerId, order_id);
-      return order ? { ok: true, data: publicOrder(order) } : notFound(order_id);
+      return order ? { ok: true, data: publicOrder(order, deps.clock()) } : notFound(order_id);
     },
   };
 
