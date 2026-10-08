@@ -1,0 +1,64 @@
+{
+  "asOf": "2026-10-08T12:00:00Z",
+  "customers": [
+    { "id": "C-100", "name": "Maya Torres", "phone": "+15550100100" },
+    { "id": "C-200", "name": "Sam Okafor", "phone": "+15550100200" }
+  ],
+  "orders": [
+    {
+      "id": "RG-1042",
+      "customerId": "C-100",
+      "status": "delivered",
+      "placedAt": "2026-09-20",
+      "deliveredAt": "2026-09-25",
+      "total": 189.0,
+      "refunded": 0,
+      "items": [{ "sku": "TENT-2P", "name": "Ridgeline 2P Tent", "qty": 1, "price": 189.0 }]
+    },
+    {
+      "id": "RG-1043",
+      "customerId": "C-100",
+      "status": "shipped",
+      "placedAt": "2026-10-05",
+      "shippedAt": "2026-10-06",
+      "carrier": "UPS",
+      "trackingNumber": "1Z-DEMO-0001043",
+      "total": 64.5,
+      "refunded": 0,
+      "items": [
+        { "sku": "BOTTLE-1L", "name": "Trail Bottle 1L", "qty": 2, "price": 18.0 },
+        { "sku": "HEADLAMP", "name": "Ridge Headlamp", "qty": 1, "price": 28.5 }
+      ]
+    },
+    {
+      "id": "RG-0977",
+      "customerId": "C-100",
+      "status": "delivered",
+      "placedAt": "2026-08-14",
+      "deliveredAt": "2026-08-20",
+      "total": 120.0,
+      "refunded": 0,
+      "items": [{ "sku": "PACK-40", "name": "Summit Pack 40L", "qty": 1, "price": 120.0 }]
+    },
+    {
+      "id": "RG-1050",
+      "customerId": "C-200",
+      "status": "delivered",
+      "placedAt": "2026-09-27",
+      "deliveredAt": "2026-10-01",
+      "total": 45.0,
+      "refunded": 0,
+      "items": [{ "sku": "GLOVES-M", "name": "Ridge Fleece Gloves", "qty": 1, "price": 45.0 }]
+    },
+    {
+      "id": "RG-1031",
+      "customerId": "C-200",
+      "status": "delivered",
+      "placedAt": "2026-09-24",
+      "deliveredAt": "2026-09-30",
+      "total": 80.0,
+      "refunded": 80.0,
+      "items": [{ "sku": "STOVE-1", "name": "Camp Stove", "qty": 1, "price": 80.0 }]
+    }
+  ]
+}
