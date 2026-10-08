@@ -20,7 +20,10 @@ export interface AppContext {
   provider: LlmProvider;
 }
 
-export function buildContext(config: AppConfig, overrides: { provider?: LlmProvider } = {}): AppContext {
+export function buildContext(
+  config: AppConfig,
+  overrides: { provider?: LlmProvider; log?: (line: Record<string, unknown>) => void } = {},
+): AppContext {
   const { store, asOf } = Store.fromFile();
   const clock = config.CLOCK === 'data' ? () => asOf : () => new Date();
   const approvals = new ApprovalQueue(store, clock);
@@ -32,7 +35,7 @@ export function buildContext(config: AppConfig, overrides: { provider?: LlmProvi
     historyTurns: config.AGENT_HISTORY_TURNS,
     pricing: { inputPer1M: config.PRICE_INPUT_PER_1M, outputPer1M: config.PRICE_OUTPUT_PER_1M },
     clock,
-    log: (line) => console.log(JSON.stringify({ ts: new Date().toISOString(), ...line })),
+    log: overrides.log ?? ((line) => console.log(JSON.stringify({ ts: new Date().toISOString(), ...line }))),
   });
   return { config, store, approvals, tickets, agent, conversations: new Map(), provider };
 }

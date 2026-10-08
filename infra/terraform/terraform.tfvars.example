@@ -1,0 +1,21 @@
+subscription_id = "00000000-0000-0000-0000-000000000000"
+prefix          = "rgdemo"
+
+# Pick a tool-calling chat model your subscription can deploy in this region,
+# and copy the exact version string from Azure AI Foundry.
+openai_location      = "eastus2"
+openai_model_name    = "<model name>"
+openai_model_version = "<model version>"
+openai_api_version   = "<data-plane api version>"
+
+# From the Azure OpenAI pricing page for that model (USD per 1M tokens).
+price_input_per_1m  = 0
+price_output_per_1m = 0
+
+admin_api_key      = "change-me-to-a-long-random-string"
+chat_api_key       = "change-me-too"
+enable_whatsapp    = false
+twilio_auth_token  = ""
+
+budget_start_date  = "2026-10-01T00:00:00Z"
+budget_alert_email = "you@example.com"
